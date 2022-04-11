@@ -1,0 +1,15 @@
+.questions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 4px solid #2987b8;
+    color: #a7c6d8;
+    height: auto;  
+    min-height: 50%;
+}
+
+.questions p {
+    text-align: center;
+    font-size: 1.5rem;
+}
+

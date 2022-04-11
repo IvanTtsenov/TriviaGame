@@ -1,0 +1,36 @@
+.answers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    min-height: 50%;
+    width: 100%;
+  }
+  
+  .insidecontainer {
+      width: 80%;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+  }
+  
+  .insidecontainer .option {
+      width: 45%;
+      height: auto;
+      min-height: 50px;
+      font-size: 18px;
+      text-align: left;
+      border: 1px solid black;
+      padding: 14px 0px 18px 5px;
+      margin: 5px;
+      border-radius: 50px;
+      border: 2px solid #2987b8;
+  }
+  
+  .insidecontainer .option:hover {
+      cursor: pointer;
+      background-color: #065e8a;
+  }
+  
