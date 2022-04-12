@@ -1,4 +1,6 @@
 import { data } from './data.js';
+
+
 //Variables
 let buttonFiftyClickChecker = 0;
 let buttonGoogleClickChecker = 0;
@@ -9,7 +11,6 @@ let timer = 30;
 let prizeBackColor = 14
 
 
-let questionChange = data[dataIndexArray].question;
 let nameChange = data[dataIndexArray].options[answersIndex].name
 let boolean = data[dataIndexArray].options[answersIndex].correct
 
@@ -30,21 +31,39 @@ let newGame = document.querySelector('.new')
 window.onload = function () {
     prize[prizeBackColor].style.color = " #ffff00";
     prize[prizeBackColor].style.fontSize = "28px";
-    questionCounter.textContent = `Question ${questionIndex}`
-    question.textContent = questionChange;
+ 
+    generateElements();
+    answersIndex = 0;
+}
 
-    // Нахвърляне на отговорите от базата данни
+function generateElements() {
+
+    questionCounter.textContent = `Question ${questionIndex}`
+    question.textContent = data[dataIndexArray].question;
+
     for (let el of answers) {
         el.style.visibility = "";
         boolean = data[dataIndexArray].options[answersIndex].correct
         nameChange = data[dataIndexArray].options[answersIndex].name
+        el.textContent = nameChange;
         el.style.backgroundColor = ""
         el.setAttribute('checker', boolean);
-        el.textContent = nameChange;
         answersIndex++;
     }
-    answersIndex = 0;
-}
+};
+
+function buttonJokerClickChecker() {
+
+    if (buttonFiftyClickChecker === 0) {
+        fifty.disabled = false;
+        fifty.setAttribute("id", "fiftyHover");
+    };
+
+    if (buttonGoogleClickChecker === 0) {
+        google.disabled = false;
+        google.setAttribute("id", "hover");
+    };
+};
 
 //Гугъл жокер
 google.addEventListener('click', (e) => {
@@ -53,7 +72,7 @@ google.addEventListener('click', (e) => {
     let confirmation = confirm("Наистина ли искате да използвате помощ от Гугъл? Ако го използвате ще имате 30 секунди на разположение.")
     if (confirmation) {
         time.style.display = 'flex';
-        let a = setInterval(myFunc, 10)
+        let a = setInterval(myFunc, 1000)
 
         function myFunc() {
             if (timer == 0) {
@@ -105,7 +124,7 @@ function fiftyPercent(e) {
         fiftyPercent(e);
     }
 
-}
+};
 
 // Провери дали отговора е верен
 answers.forEach(el => el.addEventListener('click', correctAnswer));
@@ -128,7 +147,7 @@ function correctAnswer() {
     google = document.querySelector('.friend');
     fifty = document.querySelector('.fifty');
 
-    //Премахни жокерите след като си избрал отговор
+    //Забрани жокерите след като си избрал отговор
     google.disabled = true;
     google.removeAttribute("id");
     fifty.disabled = true;
@@ -143,6 +162,7 @@ newGame.addEventListener("click", () => {
         return;
     }
 
+    prize[prizeBackColor - questionIndex + 1].style.fontSize = "";
     // Цветова гама за въпроса на който се намираш
     if (prize[prizeBackColor - questionIndex + 1].className === "save") {
         prize[prizeBackColor - questionIndex + 1].style.color = "#e9e6e9f1";
@@ -195,34 +215,16 @@ next.addEventListener("click", () => {
     ++questionIndex;
     ++dataIndexArray;
 
-    // Проверка да не има несъществуващ въпрос
+    //Проверка да не има несъществуващ въпрос
     if (questionIndex > 15) {
         questionIndex = 15;
     }
 
-    questionCounter.textContent = `Question ${questionIndex}`
-    question.textContent = data[dataIndexArray].question;
-
-    for (let el of answers) {
-        el.style.visibility = "";
-        boolean = data[dataIndexArray].options[answersIndex].correct
-        nameChange = data[dataIndexArray].options[answersIndex].name
-        el.textContent = nameChange;
-        el.style.backgroundColor = ""
-        el.setAttribute('checker', boolean);
-        answersIndex++;
-    }
+    generateElements();
 
     //Провери дали жокерите са използвани и ако не са ги активирай! За справка виж фунцкия correctAnswer
-    if (buttonFiftyClickChecker === 0) {
-        fifty.disabled = false;
-        fifty.setAttribute("id", "fiftyHover");
-    };
 
-    if (buttonGoogleClickChecker === 0) {
-        google.disabled = false;
-        google.setAttribute("id", "hover");
-    };
+    buttonJokerClickChecker();
 });
 
 
@@ -250,30 +252,11 @@ previous.addEventListener("click", () => {
 
     }
 
-    questionCounter.textContent = `Question ${questionIndex}`
-    question.textContent = data[dataIndexArray].question;
-
-    for (let el of answers) {
-        el.style.visibility = "";
-        nameChange = data[dataIndexArray].options[answersIndex].name
-        boolean = data[dataIndexArray].options[answersIndex].correct
-        el.textContent = nameChange;
-        el.style.backgroundColor = ""
-        el.setAttribute('checker', boolean);
-        answersIndex++;
-    }
+    generateElements();
 
     //Провери дали жокерите са използвани и ако не са ги активирай! За справка виж фунцкия correctAnswer
 
-    if (buttonFiftyClickChecker === 0) {
-        fifty.disabled = false;
-        fifty.setAttribute("id", "fiftyHover");
-    };
-
-    if (buttonGoogleClickChecker === 0) {
-        google.disabled = false;
-        google.setAttribute("id", "hover");
-    };
+    buttonJokerClickChecker();
 })
 
 
