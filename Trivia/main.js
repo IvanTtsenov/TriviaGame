@@ -19,6 +19,9 @@ let answers = document.querySelectorAll('.option');
 let google = document.querySelector('.friend')
 let fifty = document.querySelector('.fifty')
 let time = document.querySelector('.wrapTimer');
+let saveSumPop = document.querySelector('.saveSumPopUp')
+let prizeWin = document.querySelectorAll('.saveSumPopUp p')
+let prizeWinBtn = document.querySelector('.saveSumPopUp button')
 let countdown = document.querySelector('.googlePopUp')
 let question = document.querySelector('.questions p')
 let questionCounter = document.querySelector('.question')
@@ -31,7 +34,6 @@ let newGame = document.querySelector('.new')
 window.onload = function () {
     prize[prizeBackColor].style.color = " #ffff00";
     prize[prizeBackColor].style.fontSize = "28px";
- 
     generateElements();
     answersIndex = 0;
 }
@@ -128,7 +130,17 @@ function fiftyPercent(e) {
 
 // Провери дали отговора е верен
 answers.forEach(el => el.addEventListener('click', correctAnswer));
-function correctAnswer() {
+function correctAnswer(e) {
+
+    if (questionIndex == 5 && e.target.getAttribute('checker') === "true") {
+        saveSumPop.style.display = "flex";
+
+    } else if (questionIndex == 15 && e.target.getAttribute('checker') === "true") {
+        saveSumPop.style.display = "flex";
+        prizeWin[0].textContent = "Поздравления спечелихте голямата награда!";
+        prizeWin[1].textContent = "100 000 лева";
+        prizeWinBtn.textContent = "Нова Игра";
+    }
 
     answersIndex = 0;
     for (let el of answers) {
@@ -152,16 +164,31 @@ function correctAnswer() {
     google.removeAttribute("id");
     fifty.disabled = true;
     fifty.removeAttribute("id");
+
+
 };
+
+prizeWinBtn.addEventListener("click", (e) => {
+    if (e.target.textContent === "Продължи") {
+        saveSumPop.style.display = "none";
+    } else {
+        gameNew();
+    }
+})
 
 
 // Нова игра бутон
-newGame.addEventListener("click", () => {
+function gameNew() {
     let confirmed = confirm("Сигурни ли сте,че искате да започнете нова игра?")
     if (!confirmed) {
         return;
     }
 
+    saveSumPop.style.display = "none";
+    prizeWin[0].textContent = "Поздравления спечелихте първа сигурна сума!";
+    prizeWin[1].textContent = "500 лева";
+    prizeWinBtn.textContent = "Продължи";
+    
     prize[prizeBackColor - questionIndex + 1].style.fontSize = "";
     // Цветова гама за въпроса на който се намираш
     if (prize[prizeBackColor - questionIndex + 1].className === "save") {
@@ -194,9 +221,9 @@ newGame.addEventListener("click", () => {
     buttonGoogleClickChecker = 0;
     timer = 30;
     return window.onload();
-});
+}
 
-
+newGame.addEventListener("click", gameNew);
 
 // Бутон напред
 next.addEventListener("click", () => {

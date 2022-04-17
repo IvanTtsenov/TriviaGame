@@ -1,0 +1,42 @@
+.saveSumPopUp {
+    width: 80vw;
+    height: 100vh;
+    background-color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-62.5%,-50%);
+    background-color: #87a0aa;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.saveSumPopUp div {
+    text-align: center;
+}
+
+.saveSumPopUp div p {
+    padding: 5px;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.saveSumPopUp div p:nth-child(2){
+    font-size:76px;
+    margin-bottom:20px;
+}
+
+.saveSumPopUp button {
+    cursor: pointer;
+    color: black;
+    padding: 8px 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: rgba(211, 211, 211, 0.548);
+    border: 2px solid #090c0e;
+}
+
+.saveSumPopUp button:hover{
+    background-color: #63818d;
+}
